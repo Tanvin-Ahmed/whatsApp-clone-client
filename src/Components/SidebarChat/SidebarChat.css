@@ -1,0 +1,8 @@
+.friend .detail{
+    margin-left: 1rem;
+}
+.link{
+    text-decoration: none !important;
+    outline: none !important;
+    color: black !important;
+}

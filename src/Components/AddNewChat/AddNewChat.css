@@ -1,0 +1,33 @@
+.new_chat{
+    position: absolute;
+    z-index: 12000;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    background-color: rgb(238, 255, 236);
+    padding: 0.5rem 3rem;
+    height: 80vh;
+    text-align: center;
+}
+.search_result {
+    overflow: scroll;
+    height: 60%;
+    scrollbar-width: 1px;
+}
+.search_result .account{
+    position: relative;
+    border-bottom: 1px solid rgb(207, 207, 207);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.search_result .account > h6{
+    display: inline-block;
+}
+.search_result .account > .MuiCardActionArea-root{
+    display: inherit;
+}

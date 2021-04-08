@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Train+One&display=swap');
+
+.welcome{
+    background-color: rgb(239, 255, 239);
+    height: 100vh;
+}
+.authority{
+    font-family: 'Pacifico', cursive;
+    color: gray;
+}
+.welcome_text{
+    font-family: 'Train One', cursive;
+    color: rgb(13, 189, 13);
+}
+.welcome_img{
+    width: 20rem;
+}
+
+@media(max-width: 767px) {
+    .welcome_img{
+        width: 50%;
+    }
+}

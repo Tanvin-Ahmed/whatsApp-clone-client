@@ -19,7 +19,6 @@ const ChatBar = () => {
       <div className="side_bar_header pb-5 pl-2 pt-2">
         <div className="d-flex justify-content-between align-items-center flex-wrap">
           <Avatar src={loggedInUser.photoURL} />
-          <h6>{loggedInUser.displayName}</h6>
           <div className="icons">
             <IconButton>
               <DonutLargeIcon />

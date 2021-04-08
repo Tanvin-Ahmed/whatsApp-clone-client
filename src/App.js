@@ -33,7 +33,7 @@ function App() {
 
   // fetch for chat list
   const chatListUpdate = () => {
-    fetch(`http://localhost:5000/getSpecificChatMessages/${loggedInUser.email}`)
+    fetch(`https://secure-hamlet-09623.herokuapp.com/getSpecificChatMessages/${loggedInUser.email}`)
       .then(res => res.json())
       .then(data => {
         setChatList(data);
@@ -43,7 +43,7 @@ function App() {
 
   const getChatListFriendsDetails = () => {
     chatList.map((email) => {
-      fetch(`http://localhost:5000/getOneAccount/${email}`)
+      fetch(`https://secure-hamlet-09623.herokuapp.com/getOneAccount/${email}`)
         .then((res) => res.json())
         .then((details) => {
           setAccountDetails([...accountDetails, details]);

@@ -36,7 +36,7 @@ const Chat = () => {
     };
     console.log(newMessage);
     if (loggedInUser?.receiverEmail || chatDetail.email) {
-      fetch("http://localhost:5000/messages/new", {
+      fetch("https://secure-hamlet-09623.herokuapp.com/messages/new", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newMessage),
@@ -59,7 +59,7 @@ const Chat = () => {
   const specificChat = () => {
     if (chatDetail !== {}) {
       fetch(
-        `http://localhost:5000/getSpecificConversation/${loggedInUser?.email}/${chatDetail?.email}`
+        `https://secure-hamlet-09623.herokuapp.com/getSpecificConversation/${loggedInUser?.email}/${chatDetail?.email}`
       )
         .then((res) => res.json())
         .then((data) => {

@@ -33,7 +33,7 @@ const Login = () => {
 
   // check is old user..?
   const isOlderUser = (res) => {
-    fetch("http://localhost:5000/getAllAccount")
+    fetch("https://secure-hamlet-09623.herokuapp.com/getAllAccount")
       .then((res) => res.json())
       .then((accounts) => {
         const olderUser = accounts.find(
@@ -56,7 +56,7 @@ const Login = () => {
       email: res.email,
       photoURL: res.photoURL,
     };
-    fetch("http://localhost:5000/createAccount", {
+    fetch("https://secure-hamlet-09623.herokuapp.com/createAccount", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(userData),

@@ -17,7 +17,7 @@ const AddNewChat = () => {
   const [userList, setUSerList] = useState([]);
   useEffect(() => {
     setLoadingSpinner(true);
-    fetch("http://localhost:5000/getAllAccount")
+    fetch("https://secure-hamlet-09623.herokuapp.com/getAllAccount")
       .then((res) => res.json())
       .then((accounts) => {
         const accountWithoutUser = accounts.filter(

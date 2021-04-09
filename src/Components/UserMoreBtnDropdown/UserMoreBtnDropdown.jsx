@@ -6,24 +6,22 @@ import { infoContext } from "../../App";
 
 const UserMoreBtnDropdown = () => {
   const { setLoggedInUser } = useContext(infoContext);
-  const reload = () => {
+  const handleLogOut = () => {
+    localStorage.removeItem("whatsapp/user");
     setLoggedInUser({});
   };
   return (
-    <CardActionArea>
-      <div
-        onClick={
-          (() => {
-            localStorage.removeItem("whatsapp/user");
-          },
-          reload)
-        }
-        className="d-flex justify-content-around align-items-center p-1"
-      >
-        <h6>Log Out</h6>
-        <ExitToAppIcon />
-      </div>
-    </CardActionArea>
+    <div>
+      <CardActionArea>
+        <div
+          onClick={handleLogOut}
+          className="d-flex justify-content-around align-items-center p-1"
+        >
+          <h6>Log Out</h6>
+          <ExitToAppIcon />
+        </div>
+      </CardActionArea>
+    </div>
   );
 };
 

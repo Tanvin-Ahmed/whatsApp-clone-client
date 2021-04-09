@@ -78,7 +78,7 @@ const Chat = () => {
       <div className="chat_header">
         <Avatar src={chatDetail.photoURL} />
         <div className="chat_headerInfo">
-          <h3>{chatDetail.displayName}</h3>
+          <h6>{chatDetail.displayName}</h6>
           <p>Last seen at...</p>
         </div>
         <div className="chat_headerRight">

@@ -1,5 +1,5 @@
 import { Avatar, CardActionArea } from "@material-ui/core";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { useRouteMatch } from "react-router";
 import { Link } from "react-router-dom";
 import { infoContext } from "../../App";
@@ -17,10 +17,12 @@ const SidebarChat = ({ addNewChat }) => {
     setVisualMessage,
     accountDetails,
     getChatListFriendsDetails,
+    setAccountDetails,
   } = useContext(infoContext);
   const { url } = useRouteMatch();
 
   useEffect(() => {
+    setAccountDetails([]);
     chatListUpdate();
     getChatListFriendsDetails();
   }, [chatList[0]]);
@@ -42,6 +44,7 @@ const SidebarChat = ({ addNewChat }) => {
               setVisualMessage(true);
             }}
           >
+            {console.log(details)}
             <CardActionArea>
               <Link
                 to={screenSize >= 767 ? `${url}/chat/email` : "/chat/email"}

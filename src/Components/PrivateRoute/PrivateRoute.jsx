@@ -3,12 +3,12 @@ import { Route, Redirect } from "react-router";
 import { infoContext } from "../../App";
 
 const PrivateRoute = ({ children, ...rest }) => {
-  const {loggedInUser} = useContext(infoContext);
+  const { loggedInUser } = useContext(infoContext);
   return (
     <Route
       {...rest}
       render={({ location }) =>
-      loggedInUser.email ? (
+        loggedInUser.email || localStorage.getItem("whatsapp/user") ? (
           children
         ) : (
           <Redirect

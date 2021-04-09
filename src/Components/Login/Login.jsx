@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import "./Login.css";
 import logo from "../../img/logo/whatsapp.png";
 import { initializationLoginFramework, signInWithGoogle } from "./LoginManager";
@@ -7,7 +7,7 @@ import { infoContext } from "../../App";
 
 const Login = () => {
   initializationLoginFramework();
-  const { setLoggedInUser } = useContext(infoContext);
+  const { loggedInUser, setLoggedInUser } = useContext(infoContext);
   const history = useHistory();
   const location = useLocation();
   const { from } = location.state || { from: { pathname: "/" } };
@@ -29,6 +29,10 @@ const Login = () => {
       handleStoreData(res);
       history.replace(from);
     });
+  };
+
+  const handleLoginAfterGoogleSignIn = () => {
+    history.replace(from);
   };
 
   // check is old user..?

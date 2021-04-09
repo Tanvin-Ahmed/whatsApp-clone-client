@@ -84,7 +84,7 @@ function App() {
                 </Route>
               </Switch>) : (<Switch>
                 <PrivateRoute exact path="/">
-                  <Home />
+                <Home />
                 </PrivateRoute>
                 <Route path="/login">
                   <Login />

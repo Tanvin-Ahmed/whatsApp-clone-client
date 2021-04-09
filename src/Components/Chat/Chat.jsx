@@ -7,6 +7,7 @@ import "./Chat.css";
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 import MicIcon from "@material-ui/icons/Mic";
 import { infoContext } from "../../App";
+import Pusher from "pusher-js";
 
 const Chat = () => {
   const {
@@ -44,7 +45,6 @@ const Chat = () => {
         .then((res) => {
           console.log("send successfully");
           chatListUpdate();
-          specificChat();
           setVisualMessage(false);
           controlSidebarRender && getChatListFriendsDetails();
           setControlChatForFirstRender(false);
@@ -70,8 +70,27 @@ const Chat = () => {
   };
 
   useEffect(() => {
+    const pusher = new Pusher('9612bf90f1abfb61828b', {
+      cluster: 'ap2'
+    });
+
+    const channel = pusher.subscribe('messages');
+    channel.bind('inserted', (newMessages) => {
+      specificChat();
+      setMessages([...messages, newMessages])
+    });
+
+    return () => {
+      channel.unbind_all();
+      channel.unsubscribe();
+    }
+  }, [messages]);
+
+  useEffect(() => {
     visualMessage && specificChat();
   }, [visualMessage]);
+
+  console.log(messages);
 
   return (
     <div className="chat">

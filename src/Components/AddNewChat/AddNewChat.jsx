@@ -17,7 +17,7 @@ const AddNewChat = () => {
   const [userList, setUSerList] = useState([]);
   useEffect(() => {
     setLoadingSpinner(true);
-    fetch("https://secure-hamlet-09623.herokuapp.com/getAllAccount")
+    fetch("https://secure-hamlet-09623.herokuapp.com/getAccountBySearch?search=" + searchTerm)
       .then((res) => res.json())
       .then((accounts) => {
         const accountWithoutUser = accounts.filter(
@@ -27,7 +27,7 @@ const AddNewChat = () => {
         setLoadingSpinner(false);
       })
       .catch((err) => console.log(err));
-  }, [setLoadingSpinner, loggedInUser.email]);
+  }, [setLoadingSpinner, searchTerm]);
 
   const receiverInfo = (receiverInfo) => {
     const receiverDetails = { ...loggedInUser };

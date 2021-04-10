@@ -1,5 +1,5 @@
 import { CardActionArea } from "@material-ui/core";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import "./UserMoreBtnDropdown.css";
 import { infoContext } from "../../App";

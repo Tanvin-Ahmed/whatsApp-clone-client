@@ -21,22 +21,30 @@ function App() {
   const [accountDetails, setAccountDetails] = useState([]);
   const [controlSidebarRender, setControlSidebarRender] = useState(false);
   const [controlChatForFirstRender, setControlChatForFirstRender] = useState(false);
+  const [perAccountDetail, setPerAccountDetail] = useState({});
 
   const getUserInfoFromLocalStorage = () => {
-    const userInfo = localStorage.getItem("whatsapp/user") || JSON.stringify({ "user": "name" });
+    const userInfo = localStorage.getItem("whatsapp/user") || JSON.stringify({ "hello": "name" });
     setLoggedInUser(JSON.parse(userInfo));
+    
   }
   useEffect(() => {
     setScreenSize(window.innerWidth);
     getUserInfoFromLocalStorage();
+    chatListUpdate();
   }, []);
+
+  useEffect(() => {
+    setAccountDetails([...accountDetails, perAccountDetail]);
+  }, [perAccountDetail]);
 
   // fetch for chat list
   const chatListUpdate = () => {
-    fetch(`https://secure-hamlet-09623.herokuapp.com/getSpecificChatMessages/${loggedInUser.email}`)
+    fetch(`https://secure-hamlet-09623.herokuapp.com/getSpecificChatMessages/${loggedInUser.email || JSON.parse(localStorage.getItem("whatsapp/user")).email}`)
       .then(res => res.json())
       .then(data => {
         setChatList(data);
+        console.log(data)
       })
       .catch(err => console.log(err));
   }
@@ -46,11 +54,12 @@ function App() {
       fetch(`https://secure-hamlet-09623.herokuapp.com/getOneAccount/${email}`)
         .then((res) => res.json())
         .then((details) => {
-          setAccountDetails([...accountDetails, details]);
+          setPerAccountDetail(details);
         })
         .catch((err) => console.log(err));
     });
   };
+ 
   return (
     <div className="App">
       <infoContext.Provider value={{

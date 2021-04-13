@@ -74,7 +74,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 5rem;
+    height: 3.5rem;
     border-top: 1px solid lightgray;
     background-color: #edeeed;
 }
@@ -85,4 +85,25 @@
 .chat_footer > .MuiSvgIcon-root {
     padding: 18px;
     color: gray;
+}
+
+@media(max-width: 444px) {
+    .react-emoji-picker--wrapper{
+        position: absolute;
+        top: 100;
+        left: 10%;
+        transform: translate(-9%, -1%);
+    }
+}
+@media(max-width: 338px) {
+    .react-emoji-picker--wrapper{
+        position: absolute;
+        top: 100;
+        left: 14%;
+        transform: translate(-9%, -1%);
+        width: 225px !important;
+    }
+    .emoji-mart {
+        width: 225px !important;
+    }
 }

@@ -31,10 +31,6 @@ const Login = () => {
     });
   };
 
-  const handleLoginAfterGoogleSignIn = () => {
-    history.replace(from);
-  };
-
   // check is old user..?
   const isOlderUser = (res) => {
     fetch("https://secure-hamlet-09623.herokuapp.com/getAllAccount")

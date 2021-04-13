@@ -23,13 +23,15 @@
     color: gray;
 }
 
+
+
 .chat_body{
     flex: 1;
     background-image: url("../../img/chat-bg/chatbg.png");
     background-repeat: repeat;
     background-position: center;
     background-size: contain;
-    padding: 30px;
+    padding: 0 30px;
     overflow: scroll;
 }
 

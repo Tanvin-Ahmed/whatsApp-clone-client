@@ -26,7 +26,7 @@ function App() {
   const getUserInfoFromLocalStorage = () => {
     const userInfo = localStorage.getItem("whatsapp/user") || JSON.stringify({ "hello": "name" });
     setLoggedInUser(JSON.parse(userInfo));
-    
+
   }
   useEffect(() => {
     setScreenSize(window.innerWidth);
@@ -38,28 +38,31 @@ function App() {
     setAccountDetails([...accountDetails, perAccountDetail]);
   }, [perAccountDetail]);
 
+
   // fetch for chat list
   const chatListUpdate = () => {
-    fetch(`https://secure-hamlet-09623.herokuapp.com/getSpecificChatMessages/${loggedInUser.email || JSON.parse(localStorage.getItem("whatsapp/user")).email}`)
+    const url = localStorage.getItem("whatsapp/user") ? `https://secure-hamlet-09623.herokuapp.com/getSpecificChatMessages/${JSON.parse(localStorage.getItem("whatsapp/user")).email}` : `https://secure-hamlet-09623.herokuapp.com/getSpecificChatMessages/${loggedInUser.email}`
+    fetch(url)
       .then(res => res.json())
       .then(data => {
         setChatList(data);
-        console.log(data)
       })
       .catch(err => console.log(err));
   }
 
   const getChatListFriendsDetails = () => {
-    chatList.map((email) => {
-      fetch(`https://secure-hamlet-09623.herokuapp.com/getOneAccount/${email}`)
-        .then((res) => res.json())
-        .then((details) => {
-          setPerAccountDetail(details);
-        })
-        .catch((err) => console.log(err));
-    });
+    if (chatList) {
+      chatList.map((email) => {
+        fetch(`https://secure-hamlet-09623.herokuapp.com/getOneAccount/${email}`)
+          .then((res) => res.json())
+          .then((details) => {
+            setPerAccountDetail(details);
+          })
+          .catch((err) => console.log(err));
+      });
+    }
   };
- 
+
   return (
     <div className="App">
       <infoContext.Provider value={{
@@ -93,7 +96,7 @@ function App() {
                 </Route>
               </Switch>) : (<Switch>
                 <PrivateRoute exact path="/">
-                <Home />
+                  <Home />
                 </PrivateRoute>
                 <Route path="/login">
                   <Login />

@@ -8,6 +8,8 @@ import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 import MicIcon from "@material-ui/icons/Mic";
 import { infoContext } from "../../App";
 import Pusher from "pusher-js";
+import ScrollToBottom from 'react-scroll-to-bottom';
+
 
 const Chat = () => {
   const {
@@ -26,14 +28,12 @@ const Chat = () => {
   const sendMessage = (e) => {
     e.preventDefault();
     const d = new Date();
-    const time = d.toLocaleTimeString();
-    const date = d.toLocaleDateString();
-    const exactTime = time + " " + date;
+    const time = d.toLocaleString();
     const newMessage = {
       senderEmail: loggedInUser?.email,
       receiverEmail: loggedInUser?.receiverEmail || chatDetail.email,
       message: input,
-      timesTamp: exactTime,
+      timesTamp: time,
     };
     console.log(newMessage);
     if (loggedInUser?.receiverEmail || chatDetail.email) {
@@ -73,13 +73,11 @@ const Chat = () => {
     const pusher = new Pusher('9612bf90f1abfb61828b', {
       cluster: 'ap2'
     });
-
     const channel = pusher.subscribe('messages');
     channel.bind('inserted', (newMessages) => {
       specificChat();
       setMessages([...messages, newMessages])
     });
-
     return () => {
       channel.unbind_all();
       channel.unsubscribe();
@@ -88,9 +86,7 @@ const Chat = () => {
 
   useEffect(() => {
     visualMessage && specificChat();
-  }, [visualMessage]);
-
-  console.log(messages);
+  }, [visualMessage, chatDetail]);
 
   return (
     <div className="chat">
@@ -113,7 +109,7 @@ const Chat = () => {
         </div>
       </div>
 
-      <div className="chat_body">
+      <ScrollToBottom className="chat_body">
         {messages.map((message) => (
           <p
             className={
@@ -131,7 +127,7 @@ const Chat = () => {
             <span className="chat_timestamp">{message.timesTamp}</span>
           </p>
         ))}
-      </div>
+      </ScrollToBottom>
       <div className="chat_footer">
         <IconButton>
           <InsertEmoticonIcon />

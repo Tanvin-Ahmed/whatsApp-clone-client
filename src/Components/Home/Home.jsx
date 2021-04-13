@@ -16,10 +16,10 @@ const Home = () => {
         AddFriend && <AddNewChat />
       }
       <div className="row">
-        <div className="col-md-4 col-sm-12">
+        <div className="col-md-4 col-sm-12 pr-0">
           <ChatBar />
         </div>
-        <div className="col-md-8 col-sm-12">
+        <div className="col-md-8 col-sm-12 pl-0">
           {screenSize <= 767 ? (
             <Switch>
               <Route path="/chat/email">

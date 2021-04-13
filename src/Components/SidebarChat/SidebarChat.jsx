@@ -1,5 +1,5 @@
 import { Avatar, CardActionArea } from "@material-ui/core";
-import React, { useContext, useEffect, useState } from "react";
+import React, { memo, useContext, useEffect, useState } from "react";
 import { useRouteMatch } from "react-router";
 import { Link } from "react-router-dom";
 import { infoContext } from "../../App";
@@ -24,15 +24,14 @@ const SidebarChat = ({ addNewChat }) => {
 
   useEffect(() => {
     setAccountDetails([]);
-    getChatListFriendsDetails();
-  }, [chatList[0]]);
+      getChatListFriendsDetails()
+  }, [chatList]);
+
 
   useEffect(() => {
     const removeDuplicate = [...new Set(accountDetails)];
     setFriendList(removeDuplicate);
   }, [accountDetails]);
-
-  console.log(friendList);
 
   return !addNewChat ? (
     <div>

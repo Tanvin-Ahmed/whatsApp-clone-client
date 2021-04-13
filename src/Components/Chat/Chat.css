@@ -78,26 +78,10 @@
     border-top: 1px solid lightgray;
     background-color: #edeeed;
 }
-.chat_footer > form {
+.chat_footer > .form {
     flex: 1;
-    display: flex;
 }
-.chat_footer > form > textarea {
-    flex: 1;
-    border-radius: 30px;
-    -webkit-border-radius: 30px;
-    -moz-border-radius: 30px;
-    -ms-border-radius: 30px;
-    -o-border-radius: 30px;
-    padding: 10px;
-    border: none;
-    outline-width: 0;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-.chat_footer > form > textarea::-webkit-scrollbar {
-    display: none;
-}
+
 .chat_footer > .MuiSvgIcon-root {
     padding: 18px;
     color: gray;

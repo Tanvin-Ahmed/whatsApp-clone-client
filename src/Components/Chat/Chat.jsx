@@ -4,7 +4,6 @@ import SearchIcon from "@material-ui/icons/Search";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import "./Chat.css";
-import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 import MicIcon from "@material-ui/icons/Mic";
 import { infoContext } from "../../App";
 import Pusher from "pusher-js";
@@ -12,6 +11,7 @@ import ScrollToBottom from 'react-scroll-to-bottom';
 import { css } from '@emotion/css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import InputEmoji from "react-input-emoji";
 
 const ROOT_CSS = css({
   height: '100%',
@@ -34,11 +34,7 @@ const Chat = () => {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
 
-
-
-  const sendMessage = (e) => {
-    e.preventDefault();
-
+  const sendMessage = () => {
     const d = new Date();
     const time = d.toLocaleString();
     const newMessage = {
@@ -63,7 +59,6 @@ const Chat = () => {
         })
         .catch((err) => console.log(err));
     }
-
     setInput("");
   };
 
@@ -99,6 +94,7 @@ const Chat = () => {
   useEffect(() => {
     visualMessage && specificChat();
   }, [visualMessage, chatDetail]);
+
 
   return (
     <div className="chat">
@@ -141,26 +137,26 @@ const Chat = () => {
         ))}
       </ScrollToBottom>
       <div className="chat_footer">
-        <IconButton>
-          <InsertEmoticonIcon />
-        </IconButton>
-        <form className="d-flex align-items-center">
-          <textarea
-            cols="30"
-            rows="2"
-            className="form-control"
-            id="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            type="text"
-            placeholder="Type a message"
-          ></textarea>
+        <div className="form d-flex align-items-center">
+          {screenSize >= 767 ?
+            <InputEmoji
+              value={input}
+              onChange={setInput}
+              cleanOnEnter
+              onEnter={sendMessage}
+              placeholder="Type a message"
+            /> : <InputEmoji
+              value={input}
+              onChange={setInput}
+              placeholder="Type a message"
+            />
+          }
           <div>
             <button className="ml-2 btn btn-outline-success rounded-circle" onClick={sendMessage} type="button">
               <FontAwesomeIcon icon={faPaperPlane} />
             </button>
           </div>
-        </form>
+        </div>
         <IconButton>
           <MicIcon />
         </IconButton>

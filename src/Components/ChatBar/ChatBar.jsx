@@ -53,7 +53,7 @@ const ChatBar = () => {
       <div className="py-5 px-2 friend_list">
         <SidebarChat addNewChat />
 
-        <SidebarChat></SidebarChat>
+        <SidebarChat/>
       </div>
     </div>
   );

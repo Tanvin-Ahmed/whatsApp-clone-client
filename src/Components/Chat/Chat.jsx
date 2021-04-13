@@ -9,10 +9,19 @@ import MicIcon from "@material-ui/icons/Mic";
 import { infoContext } from "../../App";
 import Pusher from "pusher-js";
 import ScrollToBottom from 'react-scroll-to-bottom';
+import { css } from '@emotion/css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+
+const ROOT_CSS = css({
+  height: '100%',
+  width: '100%',
+});
 
 
 const Chat = () => {
   const {
+    screenSize,
     loggedInUser,
     chatListUpdate,
     chatDetail,
@@ -25,8 +34,11 @@ const Chat = () => {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
 
+
+
   const sendMessage = (e) => {
     e.preventDefault();
+
     const d = new Date();
     const time = d.toLocaleString();
     const newMessage = {
@@ -109,7 +121,7 @@ const Chat = () => {
         </div>
       </div>
 
-      <ScrollToBottom className="chat_body">
+      <ScrollToBottom className={`${ROOT_CSS} chat_body`}>
         {messages.map((message) => (
           <p
             className={
@@ -132,16 +144,22 @@ const Chat = () => {
         <IconButton>
           <InsertEmoticonIcon />
         </IconButton>
-        <form>
-          <input
+        <form className="d-flex align-items-center">
+          <textarea
+            cols="30"
+            rows="2"
+            className="form-control"
+            id="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             type="text"
             placeholder="Type a message"
-          />
-          <button onClick={sendMessage} type="submit">
-            send a message
-          </button>
+          ></textarea>
+          <div>
+            <button className="ml-2 btn btn-outline-success rounded-circle" onClick={sendMessage} type="button">
+              <FontAwesomeIcon icon={faPaperPlane} />
+            </button>
+          </div>
         </form>
         <IconButton>
           <MicIcon />

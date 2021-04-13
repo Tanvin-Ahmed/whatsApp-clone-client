@@ -59,8 +59,12 @@
 .friend_list{
     height: 70vh;
     overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
-
+.friend_list::-webkit-scrollbar {
+    display: none;
+  }
 
 
 @media(max-width: 971px) {

@@ -31,9 +31,9 @@ function App() {
   useEffect(() => {
     setScreenSize(window.innerWidth);
     getUserInfoFromLocalStorage();
-    chatListUpdate();
+    // chatListUpdate();
   }, []);
-
+  
   useEffect(() => {
     setAccountDetails([...accountDetails, perAccountDetail]);
   }, [perAccountDetail]);
@@ -63,6 +63,8 @@ function App() {
       });
     }
   };
+
+
 
   return (
     <div className="App">

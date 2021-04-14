@@ -6,13 +6,17 @@ import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 import MicIcon from "@material-ui/icons/Mic";
 import SidebarChat from "../SidebarChat/SidebarChat";
 import "firebase/firestore";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { infoContext } from "../../App";
 import UserMoreBtnDropdown from "../UserMoreBtnDropdown/UserMoreBtnDropdown";
 
 const ChatBar = () => {
-  const { loggedInUser } = useContext(infoContext);
+  const { loggedInUser, chatListUpdate } = useContext(infoContext);
   const [moreOption, setMoreOption] = useState(false);
+
+  useEffect(() => {
+    chatListUpdate()
+  }, []);
 
   return (
     <div className="side_bar">

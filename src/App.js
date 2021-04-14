@@ -46,19 +46,20 @@ function App() {
       .then(res => res.json())
       .then(data => {
         setChatList(data);
+        getChatListFriendsDetails(data);
       })
       .catch(err => console.log(err));
   }
 
-  const getChatListFriendsDetails = () => {
-    if (chatList) {
-      chatList.map((email) => {
+  const getChatListFriendsDetails = (data) => {
+    if (data) {
+      data.map((email) => {
         fetch(`https://secure-hamlet-09623.herokuapp.com/getOneAccount/${email}`)
-          .then((res) => res.json())
-          .then((details) => {
-            setPerAccountDetail(details);
-          })
-          .catch((err) => console.log(err));
+        .then((res) => res.json())
+        .then((details) => {
+          setPerAccountDetail(details);
+        })
+        .catch((err) => console.log(err));
       });
     }
   };

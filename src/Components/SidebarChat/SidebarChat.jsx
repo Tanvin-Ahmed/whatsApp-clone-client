@@ -1,5 +1,5 @@
 import { Avatar, CardActionArea } from "@material-ui/core";
-import React, { memo, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useRouteMatch } from "react-router";
 import { Link } from "react-router-dom";
 import { infoContext } from "../../App";
@@ -15,7 +15,6 @@ const SidebarChat = ({ addNewChat }) => {
     setChatDetail,
     setVisualMessage,
     accountDetails,
-    getChatListFriendsDetails,
     setAccountDetails,
   } = useContext(infoContext);
   const { url } = useRouteMatch();
@@ -24,7 +23,6 @@ const SidebarChat = ({ addNewChat }) => {
 
   useEffect(() => {
     setAccountDetails([]);
-      getChatListFriendsDetails()
   }, [chatList]);
 
 

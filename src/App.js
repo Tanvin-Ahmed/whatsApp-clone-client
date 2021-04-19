@@ -20,7 +20,6 @@ function App() {
   const [visualMessage, setVisualMessage] = useState(false);
   const [accountDetails, setAccountDetails] = useState([]);
   const [controlSidebarRender, setControlSidebarRender] = useState(false);
-  const [controlChatForFirstRender, setControlChatForFirstRender] = useState(false);
   const [perAccountDetail, setPerAccountDetail] = useState({});
 
   const getUserInfoFromLocalStorage = () => {
@@ -81,7 +80,6 @@ function App() {
         accountDetails, setAccountDetails,
         getChatListFriendsDetails,
         controlSidebarRender, setControlSidebarRender,
-        controlChatForFirstRender, setControlChatForFirstRender
       }}>
         <Router>
           {

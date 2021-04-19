@@ -30,14 +30,13 @@ const Chat = () => {
     visualMessage,
     setVisualMessage,
     controlSidebarRender,
-    setControlChatForFirstRender,
+    setControlSidebarRender
   } = useContext(infoContext);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
   const [btnOpen, setBtnOpen] = useState(false);
-  const [spinner, setSpinner] = useState(false);
   const [deleteSpinner, setDeleteSpinner] = useState(false);
-  
+
   // send message
   const sendMessage = () => {
     const d = new Date();
@@ -55,9 +54,9 @@ const Chat = () => {
         body: JSON.stringify(newMessage),
       })
         .then((res) => {
-          controlSidebarRender && chatListUpdate();
+
           setVisualMessage(false);
-          setControlChatForFirstRender(false);
+
         })
         .catch((err) => console.log(err));
     }
@@ -67,14 +66,12 @@ const Chat = () => {
   // get specific conversation
   const specificChat = () => {
     if (chatDetail !== {}) {
-      setSpinner(true);
       fetch(
         `https://secure-hamlet-09623.herokuapp.com/getSpecificConversation/${loggedInUser?.email}/${chatDetail?.email}`
       )
         .then((res) => res.json())
         .then((data) => {
           setMessages(data);
-          setSpinner(false);
         })
         .catch((err) => console.log(err));
     }
@@ -88,7 +85,9 @@ const Chat = () => {
     const channel = pusher.subscribe('messages');
     channel.bind('inserted', (newMessages) => {
       specificChat();
-      setMessages([...messages, newMessages])
+      setMessages([...messages, newMessages]);
+      controlSidebarRender && chatListUpdate();
+      setControlSidebarRender(false);
     });
     return () => {
       channel.unbind_all();
@@ -164,28 +163,24 @@ const Chat = () => {
 
 
       <ScrollToBottom className={`${ROOT_CSS} chat_body`}>
-        {spinner ? <div className="chat_spinner">
-          <Spinner animation="grow" variant="success" />
-        </div>
-          : <>
-            {messages.map((message) => (
-              <p
-                className={
-                  message.senderEmail === loggedInUser.email
-                    ? "chat_message chat_receiver"
-                    : "chat_message"
-                }
-              >
-                <span className="chat_name">
-                  {message.senderEmail === loggedInUser.email
-                    ? loggedInUser.displayName
-                    : chatDetail.displayName}
-                </span>
-                {message.message}
-                <span className="chat_timestamp">{message.timesTamp}</span>
-              </p>
-            ))}
-          </>}
+
+        {messages.map((message) => (
+          <p
+            className={
+              message.senderEmail === loggedInUser.email
+                ? "chat_message chat_receiver"
+                : "chat_message"
+            }
+          >
+            <span className="chat_name">
+              {message.senderEmail === loggedInUser.email
+                ? loggedInUser.displayName
+                : chatDetail.displayName}
+            </span>
+            {message.message}
+            <span className="chat_timestamp">{message.timesTamp}</span>
+          </p>
+        ))}
       </ScrollToBottom>
 
       {

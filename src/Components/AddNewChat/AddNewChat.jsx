@@ -9,12 +9,11 @@ const AddNewChat = () => {
     loggedInUser,
     setLoggedInUser,
     setAddFriend,
-    loadingSpinner,
-    setLoadingSpinner,
-    setControlChatForFirstRender
+    chatList
   } = useContext(infoContext);
   const [searchTerm, setSearchTerm] = useState("");
   const [userList, setUSerList] = useState([]);
+  const [loadingSpinner, setLoadingSpinner] = useState(false);
   useEffect(() => {
     setLoadingSpinner(true);
     fetch("https://secure-hamlet-09623.herokuapp.com/getAllAccount")
@@ -34,8 +33,10 @@ const AddNewChat = () => {
     receiverDetails.receiverEmail = receiverInfo.email;
     receiverDetails.receiverName = receiverInfo.displayName;
     receiverDetails.receiverPhotoURL = receiverInfo.photoURL;
-    console.log(receiverDetails);
-    setLoggedInUser(receiverDetails);
+    console.log(chatList)
+    const alreadyFriend = chatList.filter(friendEmail => friendEmail === receiverDetails.receiverEmail);
+    if (!alreadyFriend) alert('alreadyFriend'); 
+    else setLoggedInUser(receiverDetails);
   };
 
   return (

@@ -37,12 +37,7 @@ const Chat = () => {
   const [btnOpen, setBtnOpen] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const [deleteSpinner, setDeleteSpinner] = useState(false);
-
-  // useEffect(() => {
-  //   setChatDetail(JSON.parse(sessionStorage.getItem('friend')));
-  //   specificChat();
-  // }, [])
-
+  
   // send message
   const sendMessage = () => {
     const d = new Date();
@@ -124,6 +119,7 @@ const Chat = () => {
           alert('Conversation deleted');
           chatListUpdate();
           setDeleteSpinner(false);
+          specificChat();
         })
         .catch(err => alert('Delete was not successful. Please try again'));
     } else {

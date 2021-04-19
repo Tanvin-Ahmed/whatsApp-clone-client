@@ -9,18 +9,9 @@ const ChatForFirst = () => {
   const {
     screenSize,
     loggedInUser,
-    accountDetails,
     setChatDetail,
     setControlSidebarRender
   } = useContext(infoContext);
-  const [removeDuplicate, setRemoveDuplicate] = useState([]);
-  useEffect(() => {
-    const filterAccount = accountDetails.filter((c, index) => {
-      return accountDetails.indexOf(c) === index;
-    });
-    setRemoveDuplicate(filterAccount);
-  }, []);
-
 
   // get new friend info
   const newChatDetails = (user) => {

@@ -1,17 +1,19 @@
-import { Avatar, IconButton } from "@material-ui/core";
+import { Avatar, CardActionArea, IconButton } from "@material-ui/core";
 import React, { useContext, useEffect, useState } from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import "./Chat.css";
 import MicIcon from "@material-ui/icons/Mic";
-import { infoContext } from "../../App";
+import { infoContext } from "../../../App";
 import Pusher from "pusher-js";
 import ScrollToBottom from 'react-scroll-to-bottom';
 import { css } from '@emotion/css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import InputEmoji from "react-input-emoji";
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import { Spinner } from "react-bootstrap";
 
 const ROOT_CSS = css({
   height: '100%',
@@ -27,13 +29,21 @@ const Chat = () => {
     chatDetail,
     visualMessage,
     setVisualMessage,
-    getChatListFriendsDetails,
     controlSidebarRender,
     setControlChatForFirstRender,
   } = useContext(infoContext);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
+  const [btnOpen, setBtnOpen] = useState(false);
+  const [spinner, setSpinner] = useState(false);
+  const [deleteSpinner, setDeleteSpinner] = useState(false);
 
+  // useEffect(() => {
+  //   setChatDetail(JSON.parse(sessionStorage.getItem('friend')));
+  //   specificChat();
+  // }, [])
+
+  // send message
   const sendMessage = () => {
     const d = new Date();
     const time = d.toLocaleString();
@@ -43,18 +53,15 @@ const Chat = () => {
       message: input,
       timesTamp: time,
     };
-    console.log(newMessage);
-    if (loggedInUser?.receiverEmail || chatDetail.email) {
+    if (loggedInUser?.receiverEmail || chatDetail?.email) {
       fetch("https://secure-hamlet-09623.herokuapp.com/messages/new", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newMessage),
       })
         .then((res) => {
-          console.log("send successfully");
-          chatListUpdate();
+          controlSidebarRender && chatListUpdate();
           setVisualMessage(false);
-          controlSidebarRender && getChatListFriendsDetails();
           setControlChatForFirstRender(false);
         })
         .catch((err) => console.log(err));
@@ -65,17 +72,20 @@ const Chat = () => {
   // get specific conversation
   const specificChat = () => {
     if (chatDetail !== {}) {
+      setSpinner(true);
       fetch(
         `https://secure-hamlet-09623.herokuapp.com/getSpecificConversation/${loggedInUser?.email}/${chatDetail?.email}`
       )
         .then((res) => res.json())
         .then((data) => {
           setMessages(data);
+          setSpinner(false);
         })
         .catch((err) => console.log(err));
     }
   };
 
+  // get update messages using pusher
   useEffect(() => {
     const pusher = new Pusher('9612bf90f1abfb61828b', {
       cluster: 'ap2'
@@ -96,6 +106,33 @@ const Chat = () => {
   }, [visualMessage, chatDetail]);
 
 
+  // delete conversation
+  const handleConversationDelete = (userEmail, friendEmail) => {
+    if (friendEmail) {
+      setDeleteSpinner(true);
+      const conversation = {
+        userEmail: userEmail,
+        friendEmail: friendEmail
+      }
+      fetch('http://localhost:5000/clearConversation', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ conversation })
+      })
+        .then(res => res.json())
+        .then(data => {
+          alert('Conversation deleted');
+          chatListUpdate();
+          setDeleteSpinner(false);
+        })
+        .catch(err => alert('Delete was not successful. Please try again'));
+    } else {
+      alert('Please select Conversation');
+    }
+  }
+
+
+
   return (
     <div className="chat">
       <div className="chat_header">
@@ -104,38 +141,65 @@ const Chat = () => {
           <h6>{chatDetail.displayName}</h6>
           <p>Last seen at...</p>
         </div>
-        <div className="chat_headerRight">
+        <div className="chat_headerRight d-flex align-items-center flex-wrap">
           <IconButton>
             <SearchIcon />
           </IconButton>
           <IconButton>
             <AttachFileIcon />
           </IconButton>
-          <IconButton>
-            <MoreVertIcon />
-          </IconButton>
+          <div onClick={() => setBtnOpen(!btnOpen)} className="chat_more_btn">
+            <IconButton>
+              <MoreVertIcon />
+            </IconButton>
+            {btnOpen && <div className="options">
+              <div onClick={() => handleConversationDelete(loggedInUser?.email, chatDetail?.email)} className="delete">
+                <CardActionArea>
+                  <div className="d-flex align-items-center justify-content-around p-2 text-danger">
+                    <h6>Delete Conversation</h6>
+                    <DeleteForeverIcon />
+                  </div>
+                </CardActionArea>
+              </div>
+            </div>}
+          </div>
         </div>
       </div>
 
+
       <ScrollToBottom className={`${ROOT_CSS} chat_body`}>
-        {messages.map((message) => (
-          <p
-            className={
-              message.senderEmail === loggedInUser.email
-                ? "chat_message chat_receiver"
-                : "chat_message"
-            }
-          >
-            <span className="chat_name">
-              {message.senderEmail === loggedInUser.email
-                ? loggedInUser.displayName
-                : chatDetail.displayName}
-            </span>
-            {message.message}
-            <span className="chat_timestamp">{message.timesTamp}</span>
-          </p>
-        ))}
+        {spinner ? <div className="chat_spinner">
+          <Spinner animation="grow" variant="success" />
+        </div>
+          : <>
+            {messages.map((message) => (
+              <p
+                className={
+                  message.senderEmail === loggedInUser.email
+                    ? "chat_message chat_receiver"
+                    : "chat_message"
+                }
+              >
+                <span className="chat_name">
+                  {message.senderEmail === loggedInUser.email
+                    ? loggedInUser.displayName
+                    : chatDetail.displayName}
+                </span>
+                {message.message}
+                <span className="chat_timestamp">{message.timesTamp}</span>
+              </p>
+            ))}
+          </>}
       </ScrollToBottom>
+
+      {
+        deleteSpinner && <div className="text-center">
+          <Spinner animation="grow" variant="danger" size="sm" /> {' '}
+          <Spinner animation="grow" variant="danger" size="sm" /> {' '}
+          <Spinner animation="grow" variant="danger" size="sm" /> {' '}
+        </div>
+      }
+
       <div className="chat_footer">
         <div className="form d-flex align-items-center">
           {screenSize >= 767 ?

@@ -1,11 +1,10 @@
 import "./ChatBar.css";
-import { Avatar, IconButton, Snackbar } from "@material-ui/core";
+import { Avatar, IconButton } from "@material-ui/core";
 import ChatIcon from "@material-ui/icons/Chat";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 import MicIcon from "@material-ui/icons/Mic";
 import SidebarChat from "../SidebarChat/SidebarChat";
-import "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { infoContext } from "../../App";
 import UserMoreBtnDropdown from "../UserMoreBtnDropdown/UserMoreBtnDropdown";
@@ -15,8 +14,9 @@ const ChatBar = () => {
   const [moreOption, setMoreOption] = useState(false);
 
   useEffect(() => {
-    chatListUpdate()
+    chatListUpdate();
   }, []);
+ 
 
   return (
     <div className="side_bar">

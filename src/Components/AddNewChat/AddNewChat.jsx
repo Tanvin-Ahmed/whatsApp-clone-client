@@ -73,7 +73,6 @@ const AddNewChat = () => {
               <div
                 onClick={() => {
                   receiverInfo(user);
-                  setControlChatForFirstRender(true);
                 }}
                 className="account"
               >

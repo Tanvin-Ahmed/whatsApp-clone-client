@@ -10,7 +10,8 @@ const ChatForFirst = () => {
     screenSize,
     loggedInUser,
     accountDetails,
-    setChatDetail
+    setChatDetail,
+    setControlSidebarRender
   } = useContext(infoContext);
   const [removeDuplicate, setRemoveDuplicate] = useState([]);
   useEffect(() => {
@@ -31,11 +32,18 @@ const ChatForFirst = () => {
     setChatDetail(userInfo);
   }
 
+
+  // handle click
+  const handleClick = () => {
+    newChatDetails(loggedInUser);
+    setControlSidebarRender(true);
+  }
+
   return (
     <div>
       <CardActionArea>
         <Link
-          onClick={() => newChatDetails(loggedInUser)}
+          onClick={handleClick}
           to={screenSize >= 767 ? `${url}/chat/email` : "/chat/email"}
           className="link"
         >

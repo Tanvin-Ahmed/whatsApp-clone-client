@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import "./Home.css";
 
-import { Link, Route, Switch, useRouteMatch } from "react-router-dom";
-import Chat from "../Chat/Chat";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
+import Chat from "../Chat/Chat/Chat";
 import ChatBar from "../ChatBar/ChatBar";
 import { infoContext } from "../../App";
 import AddNewChat from "../AddNewChat/AddNewChat";

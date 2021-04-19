@@ -2,7 +2,7 @@ import './App.css';
 import Home from './Components/Home/Home';
 import { BrowserRouter as Router, Switch, Route, useHistory, useLocation } from "react-router-dom";
 import NoMatch from './Components/NoMatch/NoMatch';
-import Chat from './Components/Chat/Chat';
+import Chat from './Components/Chat/Chat/Chat';
 import Welcome from './Components/Welcome/Welcome';
 import { createContext, useEffect, useState } from 'react';
 import Login from './Components/Login/Login';
@@ -41,12 +41,14 @@ function App() {
 
   // fetch for chat list
   const chatListUpdate = () => {
+    setLoadingSpinner(true);
     const url = localStorage.getItem("whatsapp/user") ? `https://secure-hamlet-09623.herokuapp.com/getSpecificChatMessages/${JSON.parse(localStorage.getItem("whatsapp/user")).email}` : `https://secure-hamlet-09623.herokuapp.com/getSpecificChatMessages/${loggedInUser.email}`
     fetch(url)
       .then(res => res.json())
       .then(data => {
         setChatList(data);
         getChatListFriendsDetails(data);
+        setLoadingSpinner(false);
       })
       .catch(err => console.log(err));
   }

@@ -33,7 +33,6 @@ const AddNewChat = () => {
     receiverDetails.receiverEmail = receiverInfo.email;
     receiverDetails.receiverName = receiverInfo.displayName;
     receiverDetails.receiverPhotoURL = receiverInfo.photoURL;
-    console.log(chatList)
     const alreadyFriend = chatList.filter(friendEmail => friendEmail === receiverDetails.receiverEmail);
     if (!alreadyFriend) alert('alreadyFriend'); 
     else setLoggedInUser(receiverDetails);

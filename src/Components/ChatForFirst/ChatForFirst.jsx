@@ -1,5 +1,5 @@
 import { Avatar, CardActionArea } from "@material-ui/core";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import { infoContext } from "../../App";
 import "./ChatForFirst.css";

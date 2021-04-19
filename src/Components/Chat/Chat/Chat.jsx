@@ -27,6 +27,7 @@ const Chat = () => {
     loggedInUser,
     chatListUpdate,
     chatDetail,
+    setChatDetail, 
     visualMessage,
     setVisualMessage,
     controlSidebarRender,
@@ -86,6 +87,7 @@ const Chat = () => {
     channel.bind('inserted', (newMessages) => {
       specificChat();
       setMessages([...messages, newMessages]);
+      console.log(controlSidebarRender)
       controlSidebarRender && chatListUpdate();
       setControlSidebarRender(false);
     });
@@ -119,6 +121,11 @@ const Chat = () => {
           chatListUpdate();
           setDeleteSpinner(false);
           specificChat();
+          setChatDetail({
+            displayName: '',
+            email: '',
+            photoURL: '',
+          })
         })
         .catch(err => alert('Delete was not successful. Please try again'));
     } else {

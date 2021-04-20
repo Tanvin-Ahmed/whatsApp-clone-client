@@ -110,7 +110,7 @@ const Chat = () => {
         userEmail: userEmail,
         friendEmail: friendEmail
       }
-      fetch('http://localhost:5000/clearConversation', {
+      fetch('https://secure-hamlet-09623.herokuapp.com/clearConversation', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ conversation })
@@ -127,7 +127,10 @@ const Chat = () => {
             photoURL: '',
           })
         })
-        .catch(err => alert('Delete was not successful. Please try again'));
+        .catch(err => {
+          alert('Delete was not successful. Please try again');
+          setDeleteSpinner(false);
+        });
     } else {
       alert('Please select Conversation');
     }

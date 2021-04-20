@@ -27,7 +27,6 @@ const ChatForFirst = () => {
   // handle click
   const handleClick = () => {
     newChatDetails(loggedInUser);
-    setControlSidebarRender(true);
   }
 
   return (

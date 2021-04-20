@@ -19,7 +19,7 @@ function App() {
   const [chatDetail, setChatDetail] = useState({});
   const [visualMessage, setVisualMessage] = useState(false);
   const [accountDetails, setAccountDetails] = useState([]);
-  const [controlSidebarRender, setControlSidebarRender] = useState(false);
+  const [controlSidebarRender, setControlSidebarRender] = useState(true);
   const [perAccountDetail, setPerAccountDetail] = useState({});
 
   const getUserInfoFromLocalStorage = () => {

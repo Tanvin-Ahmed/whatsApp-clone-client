@@ -9,8 +9,8 @@ const ChatForFirst = () => {
   const {
     screenSize,
     loggedInUser,
-    setChatDetail,
-    setControlSidebarRender
+    visualMessage,
+    setVisualMessage,
   } = useContext(infoContext);
 
   // get new friend info
@@ -20,7 +20,8 @@ const ChatForFirst = () => {
       photoURL: user.receiverPhotoURL,
       email: user.receiverEmail
     };
-    setChatDetail(userInfo);
+    sessionStorage.setItem('friend', JSON.stringify(userInfo));
+    setVisualMessage(!visualMessage);
   }
 
 

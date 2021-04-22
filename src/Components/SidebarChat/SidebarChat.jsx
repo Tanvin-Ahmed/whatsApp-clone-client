@@ -6,18 +6,16 @@ import { infoContext } from "../../App";
 import "./SidebarChat.css";
 import AddIcon from "@material-ui/icons/Add";
 import ChatForFirst from "../ChatForFirst/ChatForFirst";
-import { Spinner } from "react-bootstrap";
 
 const SidebarChat = ({ addNewChat }) => {
   const {
     screenSize,
     setAddFriend,
     chatList,
-    setChatDetail,
+    visualMessage,
     setVisualMessage,
     accountDetails,
     setAccountDetails,
-    loadingSpinner,
   } = useContext(infoContext);
   const { url } = useRouteMatch();
   const [friendList, setFriendList] = useState([]);
@@ -35,9 +33,8 @@ const SidebarChat = ({ addNewChat }) => {
 
 
   const handleClick = (details) => {
-    // sessionStorage.setItem('friend', JSON.stringify(details));
-    setVisualMessage(true);
-    setChatDetail(details);
+    sessionStorage.setItem('friend', JSON.stringify(details));
+    setVisualMessage(!visualMessage);
   }
 
   return !addNewChat ? (
@@ -46,12 +43,7 @@ const SidebarChat = ({ addNewChat }) => {
       <hr />
       <hr />
       <small className="text-muted">Friend List</small>
-      { loadingSpinner ? <div>
-        <Spinner animation="grow" variant="primary" />{' '}
-        <Spinner animation="grow" variant="secondary" />{' '}
-        <Spinner animation="grow" variant="success" />
-      </div>
-        : <div>
+      <div>
           {friendList.map((details) => (
             <div
               onClick={() => handleClick(details)}
@@ -73,7 +65,7 @@ const SidebarChat = ({ addNewChat }) => {
               <hr />
             </div>
           ))}
-        </div>}
+        </div>
     </div>
   ) : (
     <CardActionArea>

@@ -16,7 +16,6 @@ function App() {
   const [AddFriend, setAddFriend] = useState(false);
   const [loadingSpinner, setLoadingSpinner] = useState(false);
   const [chatList, setChatList] = useState([]);
-  const [chatDetail, setChatDetail] = useState({});
   const [visualMessage, setVisualMessage] = useState(false);
   const [accountDetails, setAccountDetails] = useState([]);
   const [controlSidebarRender, setControlSidebarRender] = useState(true);
@@ -40,7 +39,7 @@ function App() {
 
   // fetch for chat list
   const chatListUpdate = () => {
-    setLoadingSpinner(true);
+    // setLoadingSpinner(true);
     const url = localStorage.getItem("whatsapp/user") ? `https://secure-hamlet-09623.herokuapp.com/getSpecificChatMessages/${JSON.parse(localStorage.getItem("whatsapp/user")).email}` : `https://secure-hamlet-09623.herokuapp.com/getSpecificChatMessages/${loggedInUser.email}`
     fetch(url)
       .then(res => res.json())
@@ -75,7 +74,6 @@ function App() {
         setAddFriend, loadingSpinner,
         setLoadingSpinner, getUserInfoFromLocalStorage,
         chatListUpdate, chatList,
-        chatDetail, setChatDetail,
         visualMessage, setVisualMessage,
         accountDetails, setAccountDetails,
         getChatListFriendsDetails,

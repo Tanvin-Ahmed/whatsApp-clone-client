@@ -26,8 +26,6 @@ const Chat = () => {
     screenSize,
     loggedInUser,
     chatListUpdate,
-    chatDetail,
-    setChatDetail, 
     visualMessage,
     setVisualMessage,
     controlSidebarRender,
@@ -37,6 +35,22 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [btnOpen, setBtnOpen] = useState(false);
   const [deleteSpinner, setDeleteSpinner] = useState(false);
+  const [chatDetail, setChatDetail] = useState({});
+
+  useEffect(() => {
+    const friendData = JSON.parse(sessionStorage.getItem('friend'));
+    setChatDetail(friendData);
+    if (friendData?.email !== chatDetail?.email) {
+      setVisualMessage(!visualMessage);
+    } else {
+      specificChat();
+    }
+    console.log(visualMessage)
+  }, [visualMessage]);
+
+  useEffect(() => {
+    setVisualMessage(!visualMessage);
+  }, [])
 
   // send message
   const sendMessage = () => {
@@ -44,7 +58,7 @@ const Chat = () => {
     const time = d.toLocaleString();
     const newMessage = {
       senderEmail: loggedInUser?.email,
-      receiverEmail: loggedInUser?.receiverEmail || chatDetail.email,
+      receiverEmail: loggedInUser?.receiverEmail || chatDetail?.email,
       message: input,
       timesTamp: time,
     };
@@ -66,6 +80,7 @@ const Chat = () => {
 
   // get specific conversation
   const specificChat = () => {
+    console.log(chatDetail)
     if (chatDetail !== {}) {
       fetch(
         `https://secure-hamlet-09623.herokuapp.com/getSpecificConversation/${loggedInUser?.email}/${chatDetail?.email}`
@@ -97,10 +112,6 @@ const Chat = () => {
     }
   }, [messages]);
 
-  useEffect(() => {
-    visualMessage && specificChat();
-  }, [visualMessage, chatDetail]);
-
 
   // delete conversation
   const handleConversationDelete = (userEmail, friendEmail) => {
@@ -121,11 +132,7 @@ const Chat = () => {
           chatListUpdate();
           setDeleteSpinner(false);
           specificChat();
-          setChatDetail({
-            displayName: '',
-            email: '',
-            photoURL: '',
-          })
+          setChatDetail({})
         })
         .catch(err => {
           alert('Delete was not successful. Please try again');
@@ -141,9 +148,9 @@ const Chat = () => {
   return (
     <div className="chat">
       <div className="chat_header">
-        <Avatar src={chatDetail.photoURL} />
+        <Avatar src={chatDetail?.photoURL} />
         <div className="chat_headerInfo">
-          <h6>{chatDetail.displayName}</h6>
+          <h6>{chatDetail?.displayName}</h6>
           <p>Last seen at...</p>
         </div>
         <div className="chat_headerRight d-flex align-items-center flex-wrap">
@@ -177,15 +184,15 @@ const Chat = () => {
         {messages.map((message) => (
           <p
             className={
-              message.senderEmail === loggedInUser.email
+              message.senderEmail === loggedInUser?.email
                 ? "chat_message chat_receiver"
                 : "chat_message"
             }
           >
             <span className="chat_name">
-              {message.senderEmail === loggedInUser.email
-                ? loggedInUser.displayName
-                : chatDetail.displayName}
+              {message.senderEmail === loggedInUser?.email
+                ? loggedInUser?.displayName
+                : chatDetail?.displayName}
             </span>
             {message.message}
             <span className="chat_timestamp">{message.timesTamp}</span>

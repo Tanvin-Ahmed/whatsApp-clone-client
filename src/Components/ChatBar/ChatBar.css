@@ -37,25 +37,6 @@
     -ms-transform: translateX(-50%) rotate(45deg);
     -o-transform: translateX(-50%) rotate(45deg);
 }
-.side_bar_search{
-    padding: 1rem;
-    background-color: rgb(241, 241, 241);
-}
-.side_bar_search-box {
-    background-color: white;
-    width: 100%;
-    border-radius: 15px;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    -ms-border-radius: 15px;
-    -o-border-radius: 15px;
-}
-.side_bar_search-box > input {
-    outline: none;
-    background: none;
-    border: none;
-    width: 80%;
-}
 .friend_list{
     height: 70vh;
     overflow: scroll;

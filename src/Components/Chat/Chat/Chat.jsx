@@ -15,6 +15,7 @@ import InputEmoji from "react-input-emoji";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { Spinner } from "react-bootstrap";
 import { useHistory } from "react-router";
+import CloseIcon from '@material-ui/icons/Close';
 
 const ROOT_CSS = css({
   height: '100%',
@@ -38,6 +39,8 @@ const Chat = () => {
   const [deleteSpinner, setDeleteSpinner] = useState(false);
   const [chatDetail, setChatDetail] = useState({});
   const history = useHistory();
+  const [openSearchField, setOpenSearchField] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const friendData = JSON.parse(sessionStorage.getItem('friend'));
@@ -146,8 +149,6 @@ const Chat = () => {
     }
   }
 
-
-
   return (
     <div className="chat">
       <div className="chat_header">
@@ -157,9 +158,20 @@ const Chat = () => {
           <p>Last seen at...</p>
         </div>
         <div className="chat_headerRight d-flex align-items-center flex-wrap">
-          <IconButton>
-            <SearchIcon />
-          </IconButton>
+          <div className="chat_search">
+            <IconButton onClick={() => setOpenSearchField(true)}>
+              <SearchIcon />
+            </IconButton>
+            {openSearchField && (<div className="chat_searchBox d-flex align-items-center justify-between">
+              <input onChange={(e) => setSearchTerm(e.target.value)} type="text" placeholder="Search message" />
+              <div onClick={() => setOpenSearchField(false)} className="close_btn">
+                <IconButton>
+                  <CloseIcon />
+                </IconButton>
+              </div>
+            </div>)
+            }
+          </div>
           <IconButton>
             <AttachFileIcon />
           </IconButton>
@@ -184,7 +196,15 @@ const Chat = () => {
 
       <ScrollToBottom className={`${ROOT_CSS} chat_body`}>
 
-        {messages.map((message) => (
+        {messages.filter((val) => {
+                if (searchTerm === "") {
+                  return val;
+                } else if (
+                  val.message.toLowerCase().includes(searchTerm.toLowerCase())
+                ) {
+                  return val;
+                }
+              }).map((message) => (
           <p
             className={
               message.senderEmail === loggedInUser?.email

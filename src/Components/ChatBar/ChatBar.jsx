@@ -3,7 +3,6 @@ import { Avatar, IconButton } from "@material-ui/core";
 import ChatIcon from "@material-ui/icons/Chat";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
-import MicIcon from "@material-ui/icons/Mic";
 import SidebarChat from "../SidebarChat/SidebarChat";
 import { useContext, useEffect, useState } from "react";
 import { infoContext } from "../../App";
@@ -46,14 +45,7 @@ const ChatBar = () => {
           </div>
         </div>
       </div>
-      <div className="d-flex justify-content-center align-items-center side_bar_search">
-        <div className="side_bar_search-box">
-          <IconButton>
-            <MicIcon />
-          </IconButton>
-          <input type="text" />
-        </div>
-      </div>
+      
       <div className="py-5 px-2 friend_list">
         <SidebarChat addNewChat />
 

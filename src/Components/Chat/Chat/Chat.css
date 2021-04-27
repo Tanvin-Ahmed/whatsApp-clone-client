@@ -106,12 +106,36 @@
     transform: translate(-50%, -50%);
 }
 
+.chat_search {
+    position: relative;
+}
+.chat_searchBox {
+    position: absolute;
+    top: 50%;
+    left: -350%;
+    background-color: hsl(120, 3%, 93%);
+    padding: 0 0.5rem;
+    border-radius: 5px;
+    z-index: 1200;
+}
+.chat_searchBox > input {
+    border: none;
+    outline: none;
+    padding: 0.2rem;
+    border-radius: 5px;
+}
+
 @media(max-width: 444px) {
     .react-emoji-picker--wrapper{
         position: absolute;
         top: 100;
         left: 10%;
         transform: translate(-9%, -1%);
+    }
+}
+@media (max-width:395px) {
+    .chat_searchBox {
+        left: -250%;
     }
 }
 @media(max-width: 338px) {

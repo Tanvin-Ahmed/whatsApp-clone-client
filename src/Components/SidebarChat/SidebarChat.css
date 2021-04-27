@@ -6,3 +6,22 @@
     outline: none !important;
     color: black !important;
 }
+.side_bar_search{
+    padding: 1rem;
+    background-color: rgb(241, 241, 241);
+}
+.side_bar_search-box {
+    background-color: white;
+    width: 100%;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+}
+.side_bar_search-box > input {
+    outline: none;
+    background: none;
+    border: none;
+    width: 80%;
+}

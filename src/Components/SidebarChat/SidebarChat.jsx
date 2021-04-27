@@ -1,11 +1,13 @@
 import { Avatar, CardActionArea } from "@material-ui/core";
-import React, { memo, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useRouteMatch } from "react-router";
 import { Link } from "react-router-dom";
 import { infoContext } from "../../App";
 import "./SidebarChat.css";
 import AddIcon from "@material-ui/icons/Add";
 import ChatForFirst from "../ChatForFirst/ChatForFirst";
+import MicIcon from "@material-ui/icons/Mic";
+import { IconButton } from "@material-ui/core";
 
 const SidebarChat = ({ addNewChat }) => {
   const {
@@ -19,6 +21,7 @@ const SidebarChat = ({ addNewChat }) => {
   } = useContext(infoContext);
   const { url } = useRouteMatch();
   const [friendList, setFriendList] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
 
   useEffect(() => {
@@ -41,10 +44,26 @@ const SidebarChat = ({ addNewChat }) => {
     <div>
       <ChatForFirst />
       <hr />
+      <div className="d-flex justify-content-center align-items-center side_bar_search">
+        <div className="side_bar_search-box">
+          <IconButton>
+            <MicIcon />
+          </IconButton>
+          <input onChange={(e) => setSearchTerm(e.target.value)} className="text-muted" type="text" placeholder="Find friend...." />
+        </div>
+      </div>
       <hr />
       <small className="text-muted">Friend List</small>
       <div>
-          {friendList.map((details) => (
+          {friendList.filter((val) => {
+                if (searchTerm === "") {
+                  return val;
+                } else if (
+                  val.displayName.toLowerCase().includes(searchTerm.toLowerCase())
+                ) {
+                  return val;
+                }
+              }).map((details) => (
             <div
               onClick={() => handleClick(details)}
             >

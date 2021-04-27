@@ -14,6 +14,7 @@ import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import InputEmoji from "react-input-emoji";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { Spinner } from "react-bootstrap";
+import { useHistory } from "react-router";
 
 const ROOT_CSS = css({
   height: '100%',
@@ -36,6 +37,7 @@ const Chat = () => {
   const [btnOpen, setBtnOpen] = useState(false);
   const [deleteSpinner, setDeleteSpinner] = useState(false);
   const [chatDetail, setChatDetail] = useState({});
+  const history = useHistory();
 
   useEffect(() => {
     const friendData = JSON.parse(sessionStorage.getItem('friend'));
@@ -133,6 +135,7 @@ const Chat = () => {
           setDeleteSpinner(false);
           specificChat();
           setChatDetail({})
+          screenSize > 767 ? history.push('/home/chat') : history.push('/')
         })
         .catch(err => {
           alert('Delete was not successful. Please try again');
@@ -210,7 +213,7 @@ const Chat = () => {
 
       <div className="chat_footer">
         <div className="form d-flex align-items-center">
-          {screenSize >= 767 ?
+          {screenSize > 767 ?
             <InputEmoji
               value={input}
               onChange={setInput}

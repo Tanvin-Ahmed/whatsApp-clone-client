@@ -50,7 +50,7 @@ const SidebarChat = ({ addNewChat }) => {
             >
               <CardActionArea>
                 <Link
-                  to={screenSize >= 767 ? `${url}/chat/email` : "/chat/email"}
+                  to={screenSize > 767 ? `${url}/chat/email` : "/chat/email"}
                   className="link"
                 >
                   <div className="friend py-2 d-flex align-items-center">

@@ -81,7 +81,7 @@ function App() {
       }}>
         <Router>
           {
-            screenSize >= 767 ?
+            screenSize > 767 ?
               (<Switch>
                 <PrivateRoute exact path="/">
                   <Welcome />

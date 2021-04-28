@@ -234,17 +234,22 @@ const Chat = () => {
       <div className="chat_footer">
         <div className="form d-flex align-items-center">
           {screenSize > 767 ?
-            <InputEmoji
+          (input ?
+            (<InputEmoji
               value={input}
               onChange={setInput}
               cleanOnEnter
               onEnter={sendMessage}
               placeholder="Type a message"
-            /> : <InputEmoji
+            />) : (<InputEmoji
+            value={input}
+            onChange={setInput}
+            placeholder="Type a message"
+          />)) : (<InputEmoji
               value={input}
               onChange={setInput}
               placeholder="Type a message"
-            />
+            />)
           }
           <div>
             {input && <button className="ml-2 btn btn-outline-success rounded-circle" onClick={sendMessage} type="button">

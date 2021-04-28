@@ -197,14 +197,14 @@ const Chat = () => {
       <ScrollToBottom className={`${ROOT_CSS} chat_body`}>
 
         {messages.filter((val) => {
-                if (searchTerm === "") {
-                  return val;
-                } else if (
-                  val.message.toLowerCase().includes(searchTerm.toLowerCase())
-                ) {
-                  return val;
-                }
-              }).map((message) => (
+          if (searchTerm === "") {
+            return val;
+          } else if (
+            val.message.toLowerCase().includes(searchTerm.toLowerCase())
+          ) {
+            return val;
+          }
+        }).map((message) => (
           <p
             className={
               message.senderEmail === loggedInUser?.email
@@ -247,9 +247,9 @@ const Chat = () => {
             />
           }
           <div>
-            <button className="ml-2 btn btn-outline-success rounded-circle" onClick={sendMessage} type="button">
+            {input && <button className="ml-2 btn btn-outline-success rounded-circle" onClick={sendMessage} type="button">
               <FontAwesomeIcon icon={faPaperPlane} />
-            </button>
+            </button>}
           </div>
         </div>
         <IconButton>
